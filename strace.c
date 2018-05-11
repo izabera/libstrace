@@ -2,18 +2,10 @@
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
-#include "strace.h"
 
 static int strace_pid;
 
 int strace_start(void) {
-  char mypid[10];
-  char *args[] = { "strace", "-p", mypid, 0 };
-  sprintf(mypid, "%d", getpid());
-  return strace_start_with_args(args);
-}
-
-int strace_start_with_args(char * const *args) {
   if (strace_pid > 0) return -1;
 
   char mypid[10];
@@ -21,7 +13,7 @@ int strace_start_with_args(char * const *args) {
   strace_pid = fork();
 
   if (!strace_pid)
-    return execvp("strace", args);
+    return execlp("strace", "strace", "-p", mypid, 0);
   return 0;
 }
 
