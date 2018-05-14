@@ -13,4 +13,4 @@ libstrace.so: strace.c
 
 .PHONY: clean
 clean:
-	rm -f libstrace.* test-* *.o
+	rm -f libstrace.* test-* *.o strout* core.*
